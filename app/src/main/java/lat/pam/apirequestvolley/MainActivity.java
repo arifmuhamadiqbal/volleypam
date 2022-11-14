@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                // error data tidak tampil
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray jsonArray = jsonObject.getJSONArray("list_data");
