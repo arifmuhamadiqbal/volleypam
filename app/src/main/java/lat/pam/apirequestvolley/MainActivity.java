@@ -29,41 +29,53 @@ public class MainActivity extends AppCompatActivity {
     List list;
     ListView listView;
     Button connect;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        listView = findViewById(R.id.list);
-        connect = findViewById(R.id.connect);
+        listView = findViewById(R.id.list); // listview 
+        connect = findViewById(R.id.connect); // button trigger for connect to API
+        // response when click
         connect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // hubungi_server method
                 hubungi_server();
             }
         });
     }
 
+    // connect API method
     private void hubungi_server() {
         // URL API
         String url= Global.base_url;
         // make request
         StringRequest request = new StringRequest(
-                // request method
+                // request method to API
                 Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             // if connect
             public void onResponse(String response) {
                 // get data from API
                 try {
+                    // data to JSON
                     JSONObject jsonObject = new JSONObject(response);
+                    // get array from API named "list_data"
                     JSONArray jsonArray = jsonObject.getJSONArray("list_data");
+                    // list for arraylist storage
                     list = new ArrayList<>();
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject getData = jsonArray.getJSONObject(i);
+                        // Provinsi as key
                         String Provinsi = getData.getString("key");
+                        // Case as jumlah_kasus 
                         String Case = getData.getString("jumlah_kasus");
+                        // Death as jumlah_meninggal
                         String Death = getData.getString("jumlah_meninggal");
+                        // Recover as jumlah_sembuh
                         String Recover = getData.getString("jumlah_sembuh");
+                        // adding to list
                         list.add("Provinsi : " + Provinsi + "\n\n" +
                                 "Jumlah Kasus : " + Case + "\n\n" +
                                 "Jumlah Kematian : " + Death + "\n\n" +
@@ -71,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     // adapter for listview
                     ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, list);
+                    // listview value is adapter
                     listView.setAdapter(adapter);
                 }
                 catch (JSONException e) {
@@ -86,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
-
+        // request queue using volley
         RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
         requestQueue.add(request);
     }
