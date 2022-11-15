@@ -44,27 +44,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void hubungi_server() {
+        // URL API
         String url= Global.base_url;
+        // make request
         StringRequest request = new StringRequest(
-                Request.Method.POST, url, new Response.Listener<String>() {
+                // request method
+                Request.Method.GET, url, new Response.Listener<String>() {
             @Override
+            // if connect
             public void onResponse(String response) {
-                // error data tidak tampil
+                // get data from API
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray jsonArray = jsonObject.getJSONArray("list_data");
                     list = new ArrayList<>();
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject getData = jsonArray.getJSONObject(i);
-                        String provinsi = getData.getString("key");
-                        String cases = getData.getString("jumlah_kasus");
-                        String deaths = getData.getString("jumlah_meninggal");
-                        String recovered = getData.getString("jumlah_sembuh");
-                        list.add(
-                                "Provinsi : " + provinsi + "\n" +
-                                        "Jumlah Kasus : " + cases + "\n" +
-                                        "Jumlah Meninggal : " + deaths + "\n" +
-                                        "Jumlah Sembuh : " + recovered + "\n");
+                        String Provinsi = getData.getString("key");
+                        String Case = getData.getString("jumlah_kasus");
+                        String Death = getData.getString("jumlah_meninggal");
+                        String Recover = getData.getString("jumlah_sembuh");
+                        list.add("Provinsi : " + Provinsi + "\n\n" +
+                                "Jumlah Kasus : " + Case + "\n\n" +
+                                "Jumlah Kematian : " + Death + "\n\n" +
+                                "Jumlah Sembuh : " + Recover);
                     }
                     // adapter for listview
                     ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, list);
@@ -75,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         },
+                // if not connect
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
