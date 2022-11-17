@@ -28,22 +28,14 @@ public class MainActivity extends AppCompatActivity {
 
     List list;
     ListView listView;
-    Button connect;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        listView = findViewById(R.id.list); // listview 
-        connect = findViewById(R.id.connect); // button trigger for connect to API
-        // response when click
-        connect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // hubungi_server method
-                hubungi_server();
-            }
-        });
+        listView = findViewById(R.id.list); // listview
+        // hubungi_server method
+        hubungi_server();
     }
 
     // connect API method

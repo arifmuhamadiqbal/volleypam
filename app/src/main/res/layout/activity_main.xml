@@ -13,9 +13,4 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <Button
-        android:id="@+id/connect"
-        android:text="connect"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 </LinearLayout>
